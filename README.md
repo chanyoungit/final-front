@@ -1,7 +1,7 @@
 # Devita_Front
 
 
-1조 일취월장 팀 프로젝트 Devita frontend 레포입니다.
+1조 일취월장 팀 프로젝트 Devita frontend 레포 입니다.
 <br>
 <br>
 
