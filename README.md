@@ -1,5 +1,4 @@
-# Devita_Front
-
+# Devita_Fron
 
 1조 일취월장 팀 프로젝트 Devita frontend 레포 입니다.
 <br>
