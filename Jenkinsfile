@@ -22,7 +22,7 @@ pipeline {
                 sh '''
                 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
                 export NVM_DIR="$HOME/.nvm"
-                [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
                 nvm install 14
                 nvm use 14
                 node --version
@@ -48,7 +48,7 @@ pipeline {
                 sh '''
                 sudo apt-get update
                 sudo apt-get install -y curl unzip
-                curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                curl "https://awscli.amazonaws.com/awscliv2.zip" -o "awscliv2.zip"
                 unzip awscliv2.zip
                 sudo ./aws/install
                 '''
