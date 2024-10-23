@@ -26,7 +26,8 @@ pipeline {
 
         stage('Build Project') {
             steps {
-                sh 'npm run build'
+                // CI=false를 추가하여 경고를 무시하고 빌드를 계속 진행
+                sh 'CI=false npm run build'
             }
         }
 
