@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'ec2-agent' }
+    agent { label 'devita_front_cloud' }
 
     environment {
         GIT_BRANCH = 'main'
@@ -8,35 +8,12 @@ pipeline {
         AWS_REGION = 'ap-northeast-2'
         AWS_CREDENTIALS = credentials('AwsCredentials')  // 'AwsCredentials'로 설정
         BUILD_DIR = './build'
-        NVM_DIR = "${HOME}/.nvm"  // NVM 디렉토리 설정
     }
 
     stages {
         stage('Clone Repository') {
             steps {
                 git branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
-            }
-        }
-
-        stage('Install Node.js and npm using NVM') {
-            steps {
-                sh '''
-                # NVM 설치
-                curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-                export NVM_DIR="$HOME/.nvm"
-                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
-                # NVM을 사용하여 Node.js 및 npm 설치
-                nvm install 14
-                nvm use 14
-
-                # npm 경로 설정
-                export PATH="$NVM_DIR/versions/node/v14.21.3/bin:$PATH"
-
-                # Node.js 및 npm 버전 확인
-                node --version
-                npm --version
-                '''
             }
         }
 
@@ -50,18 +27,6 @@ pipeline {
         stage('Build Project') {
             steps {
                 sh 'npm run build'
-            }
-        }
-
-        stage('Install AWS CLI') {
-            steps {
-                sh '''
-                sudo apt-get update
-                sudo apt-get install -y curl unzip
-                curl "https://awscli.amazonaws.com/awscliv2.zip" -o "awscliv2.zip"
-                unzip awscliv2.zip
-                sudo ./aws/install
-                '''
             }
         }
 
