@@ -30,7 +30,8 @@ pipeline {
                     try {
                         // CI=false로 설정하여 경고가 오류로 처리되지 않도록 함
                         //sh 'CI=false npm run build'
-                        sh 'unset CI && npm run build'
+                        // sh 'unset CI && npm run build'
+                        sh 'unset CI && npm run build --silent'
                     } catch (e) {
                         echo 'Build completed with warnings, continuing...'
                     }
