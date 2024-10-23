@@ -5,7 +5,9 @@ import 'react-calendar/dist/Calendar.css';
 import * as style from '../HomePage/style/Calendar'
 
 const HomeCalendar = ({ onSelectDate }) => {
+    // eslint-disable-next-line no-unused-vars
     const [currentWeek, setCurrentWeek] = useState([]);
+    // eslint-disable-next-line no-unused-vars
     const today = new Date();
 
 
@@ -15,7 +17,7 @@ const HomeCalendar = ({ onSelectDate }) => {
         const week = Array.from({length: 7}).map((_,i)=>addDays(start, i));
         setCurrentWeek(week);
         console.log(currentWeek);
-    },[]);
+    },[]); // eslint-disable-next-line no-unused-vars
 
 
 
