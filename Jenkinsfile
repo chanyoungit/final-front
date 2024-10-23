@@ -34,9 +34,8 @@ pipeline {
         stage('Set AWS Credentials') {
             steps {
                 script {
-                    def awsCredentials = "${env.AWS_CREDENTIALS}".split(':')
-                    env.AWS_ACCESS_KEY_ID = awsCredentials[0]
-                    env.AWS_SECRET_ACCESS_KEY = awsCredentials[1]
+                    export AWS_ACCESS_KEY_ID=$(echo $AWS_CREDENTIALS | cut -d':' -f1)
+                    export AWS_SECRET_ACCESS_KEY=$(echo $AWS_CREDENTIALS | cut -d':' -f2)
                 }
             }
         }
