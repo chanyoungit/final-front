@@ -19,7 +19,8 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                // sh 'npm install'
+                sh 'npm install --save-dev @babel/plugin-proposal-private-property-in-object'
             }
         }
 
