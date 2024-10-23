@@ -19,34 +19,33 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                // npm 설치 확인 후 실행
                 sh 'npm install'
             }
         }
 
         stage('Build Project') {
             steps {
-                // CI=false를 추가하여 경고를 무시하고 빌드를 계속 진행
                 sh 'CI=false npm run build'
             }
         }
 
         stage('Set AWS Credentials') {
             steps {
-                script {
-                    export AWS_ACCESS_KEY_ID=$(echo $AWS_CREDENTIALS | cut -d':' -f1)
-                    export AWS_SECRET_ACCESS_KEY=$(echo $AWS_CREDENTIALS | cut -d':' -f2)
+                withCredentials([string(credentialsId: 'AwsCredentials', variable: 'AWS_CREDENTIALS')]) {
+                    sh '''
+                        export AWS_ACCESS_KEY_ID=$(echo $AWS_CREDENTIALS | cut -d':' -f1)
+                        export AWS_SECRET_ACCESS_KEY=$(echo $AWS_CREDENTIALS | cut -d':' -f2)
+                    '''
                 }
             }
         }
 
         stage('Upload to S3') {
             steps {
-                script {
+                withCredentials([string(credentialsId: 'AwsCredentials', variable: 'AWS_CREDENTIALS')]) {
                     sh "aws s3 rm s3://${S3_BUCKET} --recursive --region ${AWS_REGION}"
+                    sh "aws s3 cp ${BUILD_DIR} s3://${S3_BUCKET}/ --recursive --region ${AWS_REGION}"
                 }
-
-                sh "aws s3 cp ${BUILD_DIR} s3://${S3_BUCKET}/ --recursive --region ${AWS_REGION}"
             }
         }
     }
