@@ -6,8 +6,7 @@ pipeline {
         GIT_REPO = 'https://github.com/chanyoungit/final-front'
         S3_BUCKET = 'devita-front'
         AWS_REGION = 'ap-northeast-2'
-        AWS_ACCESS_KEY_ID = credentials('AwsAccessKey')
-        AWS_SECRET_ACCESS_KEY = credentials('AwsSecretKey')
+        AWS_CREDENTIALS = credentials('AwsCredentials')  // 'AwsCredentials'로 설정
         BUILD_DIR = './build'
     }
 
@@ -27,6 +26,28 @@ pipeline {
         stage('Build Project') {
             steps {
                 sh 'npm run build'
+            }
+        }
+
+        stage('Install AWS CLI') {
+            steps {
+                sh '''
+                sudo apt-get update
+                sudo apt-get install -y curl unzip
+                curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                unzip awscliv2.zip
+                sudo ./aws/install
+                '''
+            }
+        }
+
+        stage('Set AWS Credentials') {
+            steps {
+                script {
+                    def awsCredentials = "${env.AWS_CREDENTIALS}".split(':')
+                    env.AWS_ACCESS_KEY_ID = awsCredentials[0]
+                    env.AWS_SECRET_ACCESS_KEY = awsCredentials[1]
+                }
             }
         }
 
