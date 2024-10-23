@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { format, startOfWeek, addDays, isSameDay } from 'date-fns';
-import Calendar from 'react-calendar';
+// import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import * as style from '../HomePage/style/Calendar'
 
@@ -17,7 +17,7 @@ const HomeCalendar = ({ onSelectDate }) => {
         const week = Array.from({length: 7}).map((_,i)=>addDays(start, i));
         setCurrentWeek(week);
         console.log(currentWeek);
-    },[]); // eslint-disable-next-line no-unused-vars
+    },[currentWeek]); // eslint-disable-next-line no-unused-vars
 
 
 
