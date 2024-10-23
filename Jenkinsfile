@@ -21,12 +21,19 @@ pipeline {
         stage('Install Node.js and npm using NVM') {
             steps {
                 sh '''
+                # NVM 설치
                 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
                 export NVM_DIR="$HOME/.nvm"
                 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+                # NVM을 사용하여 Node.js 및 npm 설치
                 nvm install 14
                 nvm use 14
+
+                # npm 경로 설정
                 export PATH="$NVM_DIR/versions/node/v14.21.3/bin:$PATH"
+
+                # Node.js 및 npm 버전 확인
                 node --version
                 npm --version
                 '''
@@ -35,6 +42,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
+                // npm 설치 확인 후 실행
                 sh 'npm install'
             }
         }
