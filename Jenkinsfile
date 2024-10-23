@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'devita_front_cloud' }
+    agent { label 'ec2-devita-front' }
 
     environment {
         GIT_BRANCH = 'main'
