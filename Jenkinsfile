@@ -27,8 +27,8 @@ pipeline {
             steps {
                 script {
                     try {
-                        // CI=true로 설정하여 경고가 오류로 처리되지 않도록 함
-                        sh 'CI=true npm run build'
+                        // CI=false로 설정하여 경고가 오류로 처리되지 않도록 함
+                        sh 'CI=false npm run build'
                     } catch (e) {
                         echo 'Build completed with warnings, continuing...'
                     }
