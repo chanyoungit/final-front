@@ -4,6 +4,7 @@ import Calendar from "../HomePage/Calendar";
 
 
 function HomePage() {
+// eslint-disable-next-line no-unused-vars
 const [selectedDate, setSelectedDate] = useState(new Date())
 
     return(
