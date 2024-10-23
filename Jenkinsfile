@@ -17,11 +17,14 @@ pipeline {
             }
         }
 
-        stage('Install Node.js and npm') {
+        stage('Install Node.js and npm using NVM') {
             steps {
                 sh '''
-                curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-                sudo apt-get install -y nodejs
+                curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+                export NVM_DIR="$HOME/.nvm"
+                [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                nvm install 14
+                nvm use 14
                 node --version
                 npm --version
                 '''
