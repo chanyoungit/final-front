@@ -8,6 +8,7 @@ pipeline {
         AWS_REGION = 'ap-northeast-2'
         AWS_CREDENTIALS = credentials('AwsCredentials')  // 'AwsCredentials'로 설정
         BUILD_DIR = './build'
+        NVM_DIR = "${HOME}/.nvm"  // NVM 디렉토리 설정
     }
 
     stages {
@@ -25,6 +26,7 @@ pipeline {
                 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
                 nvm install 14
                 nvm use 14
+                export PATH="$NVM_DIR/versions/node/v14.21.3/bin:$PATH"
                 node --version
                 npm --version
                 '''
