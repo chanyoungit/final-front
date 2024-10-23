@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "no-unused-vars": "off",
+    "react-hooks/exhaustive-deps": "warn" // 이 규칙은 경고로 남겨둘 수 있음
+  }
+}
