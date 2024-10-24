@@ -11,6 +11,25 @@ pipeline {
     }
 
     stages {
+        // 이전 빌드 중지 단계 추가
+        stage('Check for Previous Builds') {
+            steps {
+                script {
+                    // 현재 Job에서 실행 중인 이전 빌드를 가져옴
+                    def job = Jenkins.instance.getItemByFullName(env.JOB_NAME)
+                    def currentBuildNumber = currentBuild.number
+
+                    // 이전 빌드가 실행 중이면 중단시킴
+                    job.builds.each { build ->
+                        if (build.isBuilding() && build.number < currentBuildNumber) {
+                            echo "Cancelling build #${build.number}"
+                            build.doStop()  // 이전 빌드를 중단
+                        }
+                    }
+                }
+            }
+        }
+
         stage('Clone Repository') {
             steps {
                 git branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
@@ -19,7 +38,6 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                // sh 'npm install --save-dev @babel/plugin-proposal-private-property-in-object'
                 sh 'npm install'
             }
         }
