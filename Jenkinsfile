@@ -37,8 +37,8 @@ pipeline {
                     export AWS_ACCESS_KEY_ID=$(echo $AWS_CREDENTIALS | cut -d':' -f1)
                     export AWS_SECRET_ACCESS_KEY=$(echo $AWS_CREDENTIALS | cut -d':' -f2)
 
-                    sh "aws s3 rm s3://${S3_BUCKET} --recursive --region ${AWS_REGION}"
-                    sh "aws s3 cp ${BUILD_DIR} s3://${S3_BUCKET}/ --recursive --region ${AWS_REGION}"
+                    aws s3 rm s3://${S3_BUCKET} --recursive --region ${AWS_REGION}
+                    aws s3 cp ${BUILD_DIR} s3://${S3_BUCKET}/ --recursive --region ${AWS_REGION}
                     '''
                 }
             }
